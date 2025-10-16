@@ -22,23 +22,9 @@ const TopBar = () => {
 
   return (
     <header className="h-16 border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-      <div className="h-full px-6 flex items-center justify-between">
-        {/* Search */}
-        <div className="flex-1 max-w-2xl">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-            <Input
-              type="search"
-              placeholder="Search projects, tasks, or members..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 rounded-full bg-background border-border"
-            />
-          </div>
-        </div>
-
+      <div className="h-full px-6 flex items-center justify-end">
         {/* Right side actions */}
-        <div className="flex items-center space-x-2 ml-4">
+        <div className="flex items-center space-x-3 ml-4">
           {/* Theme Toggle */}
           <Button
             variant="ghost"
@@ -70,21 +56,21 @@ const TopBar = () => {
                 <DropdownMenuItem className="p-4 cursor-pointer rounded-xl">
                   <div>
                     <p className="font-medium">New task assigned</p>
-                    <p className="text-sm text-muted-foreground">John assigned you "Design Authentication UI"</p>
+                    <p className="text-sm text-muted-foreground">Admin Assigned the new project and task to you</p>
                     <p className="text-xs text-muted-foreground mt-1">2 hours ago</p>
                   </div>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="p-4 cursor-pointer rounded-xl">
                   <div>
                     <p className="font-medium">Project update</p>
-                    <p className="text-sm text-muted-foreground">Mobile App Development reached 65% completion</p>
+                    <p className="text-sm text-muted-foreground">The project has updated with new tasks </p>
                     <p className="text-xs text-muted-foreground mt-1">5 hours ago</p>
                   </div>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="p-4 cursor-pointer rounded-xl">
                   <div>
-                    <p className="font-medium">Comment mention</p>
-                    <p className="text-sm text-muted-foreground">Sarah mentioned you in a comment</p>
+                    <p className="font-medium">Your Team Work</p>
+                    <p className="text-sm text-muted-foreground">Another team is waiting for your works</p>
                     <p className="text-xs text-muted-foreground mt-1">1 day ago</p>
                   </div>
                 </DropdownMenuItem>

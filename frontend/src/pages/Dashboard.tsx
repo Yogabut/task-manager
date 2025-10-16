@@ -13,6 +13,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -108,9 +109,15 @@ const Dashboard = () => {
         <div className="lg:col-span-2 bg-card rounded-3xl p-6 shadow-lg">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold">Recent Projects</h2>
-            <Button variant="ghost" className="group">
-              View All
-              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <Button 
+              variant="ghost" 
+              className="group" 
+              asChild
+            >
+              <Link to="/projects">
+                View All
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </Button>
           </div>
           <div className="space-y-4">

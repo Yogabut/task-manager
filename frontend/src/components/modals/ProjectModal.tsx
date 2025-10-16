@@ -71,9 +71,11 @@ const ProjectModal = ({ open, onClose, project }: ProjectModalProps) => {
     }
 
     if (project) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       updateProject(project.id, formData as any);
       toast.success('Project updated successfully');
     } else {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       addProject(formData as any);
       toast.success('Project created successfully');
     }
@@ -135,7 +137,7 @@ const ProjectModal = ({ open, onClose, project }: ProjectModalProps) => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="planning">Planning</SelectItem>
-                  <SelectItem value="ongoing">Ongoing</SelectItem>
+                  <SelectItem value="in-progress">In Progress</SelectItem>
                   <SelectItem value="on-hold">On Hold</SelectItem>
                   <SelectItem value="completed">Completed</SelectItem>
                 </SelectContent>
