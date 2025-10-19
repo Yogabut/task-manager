@@ -28,12 +28,14 @@ const Login = () => {
     <div className="min-h-screen flex">
       {/* Left side - Gradient */}
       <div className="hidden lg:flex lg:w-1/2 gradient-indigo items-center justify-center p-12">
-        <div className="text-white text-center max-w-md animate-fade-in">
-          <h1 className="text-5xl font-bold mb-6">Project Management</h1>
+        <div className="text-white text-center max-w-md mx-auto flex flex-col items-center animate-fade-in">
+          <img src="./logo.png" alt="" className="h-40 w-45" />
+          <h1 className="text-3xl font-bold mb-2">Project Management</h1>
           <p className="text-xl text-white/90">
             Collaborate, track progress, and achieve your goals with our modern dashboard
           </p>
         </div>
+
       </div>
 
       {/* Right side - Login Form */}
@@ -41,8 +43,8 @@ const Login = () => {
         <div className="w-full max-w-md animate-scale-in">
           <div className="bg-card rounded-3xl shadow-xl p-8 space-y-8">
             <div className="text-center">
-              <div className="w-16 h-16 gradient-indigo rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <LogIn className="w-8 h-8 text-white" />
+              <div className="w-20 h-20 items-center justify-center mx-auto">
+                <img src="./logo.png" alt="" />
               </div>
               <h2 className="text-3xl font-bold">Welcome Back</h2>
               <p className="text-muted-foreground mt-2">Sign in to your account</p>
