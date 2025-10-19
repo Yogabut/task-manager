@@ -123,7 +123,7 @@ const AIAssistant = () => {
       </div>
 
       {/* Chat Container */}
-      <div className="bg-card rounded-3xl shadow-lg overflow-hidden" style={{ height: 'calc(100vh - 300px)' }}>
+      <div className="bg-card rounded-3xl shadow-lg overflow-hidden" style={{ height: 'calc(100vh - 208px)' }}>
         {/* Messages */}
         <div className="h-full flex flex-col">
           <div className="flex-1 overflow-y-auto p-6 space-y-4">

@@ -82,16 +82,6 @@ const Login = () => {
                 Sign In
               </Button>
             </form>
-
-            <div className="text-center text-sm text-muted-foreground space-y-2">
-              <p className="font-medium">Demo Accounts:</p>
-              <div className="space-y-1">
-                <p>Admin: admin@example.com</p>
-                <p>Leader: leader@example.com</p>
-                <p>Member: member@example.com</p>
-                <p className="text-xs mt-2">Password: password123</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>
