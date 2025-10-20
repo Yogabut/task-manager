@@ -15,7 +15,7 @@ export interface Project {
   name: string;
   description: string;
   category: 'urgent' | 'important' | 'normal';
-  status: 'planning' | 'ongoing' | 'completed' | 'on-hold';
+  status: 'planning' | 'in-progress' | 'completed' | 'on-hold';
   leaderId: string;
   memberIds: string[];
   progress: number;
@@ -91,7 +91,7 @@ export const mockProjects: Project[] = [
     name: 'Mobile App Development', 
     description: 'Build a cross-platform mobile application',
     category: 'urgent', 
-    status: 'ongoing', 
+    status: 'in-progress', 
     leaderId: '2', 
     memberIds: ['2', '3', '4'], 
     progress: 65, 
@@ -104,7 +104,7 @@ export const mockProjects: Project[] = [
     name: 'Website Redesign', 
     description: 'Modernize company website with new branding',
     category: 'important', 
-    status: 'ongoing', 
+    status: 'in-progress', 
     leaderId: '2', 
     memberIds: ['2', '5'], 
     progress: 40, 

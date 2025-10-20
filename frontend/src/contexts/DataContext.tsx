@@ -19,7 +19,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       name: pp.name,
       description: pp.description || '',
       category: (pp.category as Project['category']) || 'important',
-      status: pp.status === 'in-progress' ? 'ongoing' : ((pp.status as Project['status']) || 'planning'),
+      status: pp.status === 'in-progress' ? 'in-progress' : ((pp.status as Project['status']) || 'planning'),
       leaderId,
       memberIds,
       progress: pp.progress ?? 0,
@@ -61,7 +61,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const toProjectDTO = (p: Omit<Project, 'id'>): Partial<ProjectDTO> => ({
     name: p.name,
     description: p.description,
-    status: p.status === 'ongoing' ? 'in-progress' : (p.status as unknown as string),
+    status: p.status === 'in-progress' ? 'in-progress' : (p.status as unknown as string),
     startDate: p.startDate,
     endDate: p.endDate,
     category: p.category,

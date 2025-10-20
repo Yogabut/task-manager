@@ -29,7 +29,7 @@ const Projects = () => {
     switch (status) {
       case 'completed':
         return 'bg-success/10 text-success';
-      case 'ongoing':
+      case 'in-progress':
         return 'bg-primary/10 text-primary';
       case 'planning':
         return 'bg-warning/10 text-warning';
