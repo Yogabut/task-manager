@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts';
 import useData from '@/contexts/useData';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Search, Bell, Sun, Moon, CheckCheck } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Bell, Sun, Moon, CheckCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -37,25 +36,34 @@ const TopBar = () => {
   useEffect(() => {
     if (!user) return;
 
-    const newNotifications: Notification[] = [];
+    const storageKey = `notifications_${user.id}`;
+    const storedNotifications = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const existingNotifications = storedNotifications.map((n: any) => ({
+      ...n,
+      createdAt: new Date(n.createdAt),
+    }));
+
+    const newNotifications: Notification[] = [...existingNotifications];
+    const existingIds = new Set(existingNotifications.map((n: Notification) => n.id));
 
     // Check for tasks assigned to user
     tasks.forEach(task => {
       if (task.assigneeIds?.includes(user.id)) {
-        const taskDate = new Date(task.dueDate);
-        const now = new Date();
-        const isNew = (now.getTime() - taskDate.getTime()) < 7 * 24 * 60 * 60 * 1000; // Last 7 days
-
-        if (isNew) {
+        const notifId = `task-${task.id}`;
+        
+        // Only create notification if it doesn't exist yet
+        if (!existingIds.has(notifId)) {
           const project = projects.find(p => p.id === task.projectId);
           newNotifications.push({
-            id: `task-${task.id}`,
+            id: notifId,
             type: 'task',
             title: 'New task assigned',
             message: `You have been assigned to "${task.title}" in ${project?.name || 'a project'}`,
             taskId: task.id,
             projectId: task.projectId,
-            createdAt: taskDate,
+            createdAt: new Date(), // Use current time as notification creation time
             read: false,
           });
         }
@@ -65,18 +73,17 @@ const TopBar = () => {
     // Check for projects where user is a member
     projects.forEach(project => {
       if (project.memberIds?.includes(user.id)) {
-        const projectDate = new Date(project.startDate);
-        const now = new Date();
-        const isNew = (now.getTime() - projectDate.getTime()) < 7 * 24 * 60 * 60 * 1000; // Last 7 days
-
-        if (isNew) {
+        const notifId = `project-${project.id}`;
+        
+        // Only create notification if it doesn't exist yet
+        if (!existingIds.has(notifId)) {
           newNotifications.push({
-            id: `project-${project.id}`,
+            id: notifId,
             type: 'project',
             title: 'Added to new project',
             message: `You have been added to "${project.name}" project`,
             projectId: project.id,
-            createdAt: projectDate,
+            createdAt: new Date(), // Use current time as notification creation time
             read: false,
           });
         }
@@ -86,14 +93,8 @@ const TopBar = () => {
     // Sort by date (newest first)
     newNotifications.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
-    // Load read status from localStorage (per user)
-    const storageKey = `readNotifications_${user.id}`;
-    const readNotifications = JSON.parse(localStorage.getItem(storageKey) || '[]');
-    newNotifications.forEach(notif => {
-      if (readNotifications.includes(notif.id)) {
-        notif.read = true;
-      }
-    });
+    // Save all notifications to localStorage
+    localStorage.setItem(storageKey, JSON.stringify(newNotifications));
 
     setNotifications(newNotifications);
   }, [user, tasks, projects]);
@@ -101,28 +102,25 @@ const TopBar = () => {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   const markAsRead = (notificationId: string) => {
-    setNotifications(prev => 
-      prev.map(notif => 
-        notif.id === notificationId ? { ...notif, read: true } : notif
-      )
+    const updatedNotifications = notifications.map(notif => 
+      notif.id === notificationId ? { ...notif, read: true } : notif
     );
+    
+    setNotifications(updatedNotifications);
 
     // Save to localStorage (per user)
-    const storageKey = `readNotifications_${user?.id}`;
-    const readNotifications = JSON.parse(localStorage.getItem(storageKey) || '[]');
-    if (!readNotifications.includes(notificationId)) {
-      readNotifications.push(notificationId);
-      localStorage.setItem(storageKey, JSON.stringify(readNotifications));
-    }
+    const storageKey = `notifications_${user?.id}`;
+    localStorage.setItem(storageKey, JSON.stringify(updatedNotifications));
   };
 
   const markAllAsRead = () => {
-    const allIds = notifications.map(n => n.id);
-    setNotifications(prev => prev.map(notif => ({ ...notif, read: true })));
+    const updatedNotifications = notifications.map(notif => ({ ...notif, read: true }));
+    
+    setNotifications(updatedNotifications);
     
     // Save to localStorage (per user)
-    const storageKey = `readNotifications_${user?.id}`;
-    localStorage.setItem(storageKey, JSON.stringify(allIds));
+    const storageKey = `notifications_${user?.id}`;
+    localStorage.setItem(storageKey, JSON.stringify(updatedNotifications));
   };
 
   const getTimeAgo = (date: Date) => {
