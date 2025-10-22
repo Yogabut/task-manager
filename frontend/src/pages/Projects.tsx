@@ -7,7 +7,7 @@ import { Project } from '@/lib/mockData';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Plus, Grid, List, Edit, Trash2 } from 'lucide-react';
+import { Plus, Grid, List, Edit, Trash2, MoreVertical } from 'lucide-react';
 import { toast } from 'sonner';
 import {
   DropdownMenu,
@@ -15,7 +15,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { MoreVertical } from 'lucide-react';
 
 const Projects = () => {
   const navigate = useNavigate();
@@ -56,13 +55,13 @@ const Projects = () => {
   };
 
   const handleEdit = (e: React.MouseEvent, project: Project) => {
-    e.stopPropagation(); // Prevent navigation when editing
+    e.stopPropagation();
     setSelectedProject(project);
     setModalOpen(true);
   };
 
   const handleDelete = (e: React.MouseEvent, projectId: string) => {
-    e.stopPropagation(); // Prevent navigation when deleting
+    e.stopPropagation();
     if (window.confirm('Are you sure you want to delete this project?')) {
       deleteProject(projectId);
       toast.success('Project deleted successfully');
@@ -81,14 +80,14 @@ const Projects = () => {
       />
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-4xl font-bold mb-2">Projects</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold mb-2">Projects</h1>
             <p className="text-muted-foreground">
               Manage and track all your projects
             </p>
           </div>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-3">
             <div className="flex items-center bg-card rounded-xl p-1 shadow-sm">
               <Button
                 variant={viewMode === 'grid' ? 'default' : 'ghost'}
@@ -113,7 +112,8 @@ const Projects = () => {
                 className="gradient-indigo text-white hover:scale-105 transition-transform rounded-xl shadow-lg"
               >
                 <Plus className="w-4 h-4 mr-2" />
-                New Project
+                <span className="hidden sm:inline">New Project</span>
+                <span className="sm:hidden">New</span>
               </Button>
             )}
           </div>
@@ -121,7 +121,7 @@ const Projects = () => {
 
         {/* Projects Grid */}
         {viewMode === 'grid' ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
             {projects.map((project) => (
               <div
                 key={project.id}
@@ -129,14 +129,14 @@ const Projects = () => {
                 className="bg-card rounded-3xl overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
               >
                 {/* Gradient Header */}
-                <div className={`${project.color} h-24 relative`}>
-                  <div className="absolute top-4 left-4">
+                <div className={`${project.color} h-20 sm:h-24 relative`}>
+                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4">
                     <Badge className={getCategoryBadge(project.category)}>
                       {project.category}
                     </Badge>
                   </div>
                   {user?.role === 'admin' && (
-                    <div className="absolute top-4 right-4">
+                    <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
                           <Button variant="ghost" size="icon" className="text-white hover:bg-white/20 rounded-full">
@@ -162,12 +162,12 @@ const Projects = () => {
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
+                <div className="p-4 sm:p-6">
+                  <div className="flex items-start justify-between mb-3 gap-2">
+                    <h3 className="text-lg sm:text-xl font-bold group-hover:text-primary transition-colors flex-1 min-w-0">
                       {project.name}
                     </h3>
-                    <Badge className={getStatusColor(project.status)}>
+                    <Badge className={`${getStatusColor(project.status)} whitespace-nowrap`}>
                       {project.status}
                     </Badge>
                   </div>
@@ -186,14 +186,14 @@ const Projects = () => {
                   </div>
 
                   {/* Team & Date */}
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-2">
                     <div className="flex -space-x-2">
                       {project.memberIds.slice(0, 4).map((memberId, idx) => {
                         const member = users.find(u => u.id === memberId);
                         return (
                           <div
                             key={idx}
-                            className="w-9 h-9 rounded-full gradient-indigo flex items-center justify-center border-2 border-card"
+                            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full gradient-indigo flex items-center justify-center border-2 border-card"
                             title={member?.name}
                           >
                             <span className="text-white text-sm">{member?.avatar}</span>
@@ -201,12 +201,12 @@ const Projects = () => {
                         );
                       })}
                       {project.memberIds.length > 4 && (
-                        <div className="w-9 h-9 rounded-full bg-muted flex items-center justify-center border-2 border-card text-xs font-medium">
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-muted flex items-center justify-center border-2 border-card text-xs font-medium">
                           +{project.memberIds.length - 4}
                         </div>
                       )}
                     </div>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-muted-foreground whitespace-nowrap">
                       Due {new Date(project.endDate).toLocaleDateString()}
                     </span>
                   </div>
@@ -216,17 +216,18 @@ const Projects = () => {
           </div>
         ) : (
           /* List View */
-          <div className="bg-card rounded-3xl p-6 shadow-lg space-y-3">
+          <div className="bg-card rounded-3xl p-3 sm:p-6 shadow-lg space-y-3">
             {projects.map((project) => (
               <div
                 key={project.id}
                 onClick={() => handleProjectClick(project.id)}
-                className="bg-background rounded-2xl p-5 hover:shadow-md transition-all cursor-pointer border border-border"
+                className="bg-background rounded-2xl p-4 sm:p-5 hover:shadow-md transition-all cursor-pointer border border-border"
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-3 mb-2">
-                      <h3 className="text-lg font-semibold">{project.name}</h3>
+                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                  {/* Left Section */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <h3 className="text-base sm:text-lg font-semibold">{project.name}</h3>
                       <Badge className={getStatusColor(project.status)}>
                         {project.status}
                       </Badge>
@@ -234,26 +235,36 @@ const Projects = () => {
                         {project.category}
                       </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground">{project.description}</p>
+                    <p className="text-sm text-muted-foreground line-clamp-1 sm:line-clamp-2">
+                      {project.description}
+                    </p>
                   </div>
-                  <div className="flex items-center space-x-8 ml-8">
+
+                  {/* Right Section */}
+                  <div className="flex items-center justify-between lg:justify-end gap-4 sm:gap-6 lg:gap-8">
+                    {/* Progress */}
                     <div className="text-center">
-                      <p className="text-2xl font-bold">{project.progress}%</p>
+                      <p className="text-xl sm:text-2xl font-bold">{project.progress}%</p>
                       <p className="text-xs text-muted-foreground">Progress</p>
                     </div>
+
+                    {/* Team Members */}
                     <div className="flex -space-x-2">
                       {project.memberIds.slice(0, 3).map((memberId, idx) => {
                         const member = users.find(u => u.id === memberId);
                         return (
                           <div
                             key={idx}
-                            className="w-9 h-9 rounded-full gradient-indigo flex items-center justify-center border-2 border-background"
+                            className="w-8 h-8 sm:w-9 sm:h-9 rounded-full gradient-indigo flex items-center justify-center border-2 border-background"
+                            title={member?.name}
                           >
                             <span className="text-white text-sm">{member?.avatar}</span>
                           </div>
                         );
                       })}
                     </div>
+
+                    {/* Actions */}
                     {user?.role === 'admin' && (
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
