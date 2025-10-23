@@ -11,6 +11,7 @@ export interface User {
 }
 
 export interface Project {
+  createdAt: string;
   id: string;
   name: string;
   description: string;

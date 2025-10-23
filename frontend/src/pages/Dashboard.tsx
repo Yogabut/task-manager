@@ -32,7 +32,9 @@ const Dashboard = () => {
   };
 
   const myTasks = user ? tasks.filter(t => t.assigneeIds?.includes(user.id)) : [];
-  const recentProjects = projects.slice(0, 3);
+  const recentProjects = [...projects]
+    .sort((a, b) => new Date(b.createdAt || b.startDate).getTime() - new Date(a.createdAt || a.startDate).getTime())
+    .slice(0, 3);
   const { recentCompletedTasks } = useData();
 
   const getStatusColor = (status: string) => {
