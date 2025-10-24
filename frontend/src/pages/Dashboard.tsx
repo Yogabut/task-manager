@@ -33,7 +33,11 @@ const Dashboard = () => {
 
   const myTasks = user ? tasks.filter(t => t.assigneeIds?.includes(user.id)) : [];
   const recentProjects = [...projects]
-    .sort((a, b) => new Date(b.createdAt || b.startDate).getTime() - new Date(a.createdAt || a.startDate).getTime())
+    .sort((a, b) => {
+      const dateA = new Date(a.createdAt || a.startDate).getTime();
+      const dateB = new Date(b.createdAt || b.startDate).getTime();
+      return dateB - dateA;
+    })
     .slice(0, 3);
   const { recentCompletedTasks } = useData();
 

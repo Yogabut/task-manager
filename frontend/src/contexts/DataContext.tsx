@@ -15,18 +15,19 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const leaderId = typeof pp.leaderId === 'string' ? pp.leaderId : (pp.leaderId && (pp.leaderId as { _id?: string })._id) || '';
     const memberIds = (pp.memberIds || []).map(m => (typeof m === 'string' ? m : (m as { _id?: string })._id || '')) as string[];
     return {
-      id: pp._id,
-      name: pp.name,
-      description: pp.description || '',
-      category: (pp.category as Project['category']) || 'important',
-      status: pp.status === 'in-progress' ? 'in-progress' : ((pp.status as Project['status']) || 'planning'),
-      leaderId,
-      memberIds,
-      progress: pp.progress ?? 0,
-      startDate: pp.startDate || '',
-      endDate: pp.endDate || '',
-      color: pp.color || 'gradient-indigo',
-    };
+  id: pp._id,
+  name: pp.name,
+  description: pp.description || '',
+  category: (pp.category as Project['category']) || 'important',
+  status: pp.status === 'in-progress' ? 'in-progress' : ((pp.status as Project['status']) || 'planning'),
+  leaderId,
+  memberIds,
+  progress: pp.progress ?? 0,
+  startDate: pp.startDate || '',
+  endDate: pp.endDate || '',
+  color: pp.color || 'gradient-indigo',
+  createdAt: ''
+};
   };
 
   const mapTask = (tt: TaskDTO): Task => {

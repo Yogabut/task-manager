@@ -88,6 +88,7 @@ export const mockUsers: User[] = [
 
 export const mockProjects: Project[] = [
   { 
+    createdAt: '2025-01-01',
     id: 'p1', 
     name: 'Mobile App Development', 
     description: 'Build a cross-platform mobile application',
@@ -101,6 +102,7 @@ export const mockProjects: Project[] = [
     color: 'gradient-purple'
   },
   { 
+    createdAt: '2025-02-01',
     id: 'p2', 
     name: 'Website Redesign', 
     description: 'Modernize company website with new branding',
@@ -114,6 +116,7 @@ export const mockProjects: Project[] = [
     color: 'gradient-pink'
   },
   { 
+    createdAt: '2025-03-01',
     id: 'p3', 
     name: 'API Integration', 
     description: 'Integrate third-party APIs for data synchronization',
@@ -127,6 +130,7 @@ export const mockProjects: Project[] = [
     color: 'gradient-blue'
   },
   { 
+    createdAt: '2024-12-01',
     id: 'p4', 
     name: 'Marketing Campaign', 
     description: 'Launch Q2 marketing campaign across all channels',
@@ -140,6 +144,7 @@ export const mockProjects: Project[] = [
     color: 'gradient-emerald'
   },
   { 
+    createdAt: '2025-01-15',
     id: 'p5', 
     name: 'Security Audit', 
     description: 'Comprehensive security review and penetration testing',
